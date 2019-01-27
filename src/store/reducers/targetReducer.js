@@ -7,6 +7,10 @@ const initState = {
 };
 
 const targetReducer = (state = initState, action) => {
+  switch (action.type) {
+    case "CREATE_TARGET":
+      console.log("created target", action.target);
+  }
   return state;
 };
 

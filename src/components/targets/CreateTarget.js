@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createTarget } from "../../store/actions/targetActions";
 
 class CreateTarget extends Component {
   state = {
@@ -15,6 +17,7 @@ class CreateTarget extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
+    this.props.createTarget(this.state);
   };
 
   render() {
@@ -43,4 +46,13 @@ class CreateTarget extends Component {
   }
 }
 
-export default CreateTarget;
+const mapDispatchToProps = dispatch => {
+  return {
+    createTarget: target => dispatch(createTarget(target))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CreateTarget);
