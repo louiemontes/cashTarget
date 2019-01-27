@@ -9,8 +9,6 @@ const TargetList = () => {
       <TargetSummary />
       <TargetSummary />
       <TargetSummary />
-
-      
     </div>
   );
 };
