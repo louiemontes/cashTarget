@@ -7,7 +7,6 @@ import { compose } from "redux";
 
 class Dashboard extends Component {
   render() {
-    //console.log(this.props);
     const { targets } = this.props;
 
     return (
@@ -25,7 +24,6 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     targets: state.firestore.ordered.targets
   };
