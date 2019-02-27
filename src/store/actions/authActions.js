@@ -15,17 +15,45 @@ export const signIn = credentials => {
 };
 
 export const signOut = () => {
-    return (dispatch, getState, { getFirebase }) => {
-      const firebase = getFirebase();
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          dispatch({ type: "SIGNOUT_SUCCESS" });
-        })
-        .catch(error => {
-          dispatch({ type: "SIGNOUT_ERROR", error });
-        });
-    };
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch({ type: "SIGNOUT_SUCCESS" });
+      })
+      .catch(error => {
+        dispatch({ type: "SIGNOUT_ERROR", error });
+      });
   };
-  
+};
+
+export const signUp = newUser => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    if (newUser) {
+      dispatch({ type: "SIGNUP_ERROR", err: 'No entered information' });
+    }
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      .then(response => {
+        return firestore
+          .collection("users")
+          .doc(response.user.uid)
+          .set({
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            initials: newUser.firstName[0] + newUser.lastName[0]
+          });
+      })
+      .then(() => {
+        dispatch({ type: "SIGNUP_SUCCESS" });
+      })
+      .catch(err => dispatch({ type: "SIGNUP_ERROR", err }));
+  };
+};
