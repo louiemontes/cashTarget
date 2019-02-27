@@ -4,10 +4,13 @@ import TargetList from "../targets/TargetList";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 
 class Dashboard extends Component {
   render() {
-    const { targets } = this.props;
+    const { targets, auth } = this.props;
+
+    if (!auth.uid) return <Redirect to="/signin" />;
 
     return (
       <div className="dashboard container">
@@ -25,7 +28,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    targets: state.firestore.ordered.targets
+    targets: state.firestore.ordered.targets,
+    auth: state.firebase.auth
   };
 };
 
