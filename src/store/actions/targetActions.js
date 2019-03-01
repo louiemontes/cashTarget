@@ -2,13 +2,16 @@ export const createTarget = target => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // something async to db
     const firestore = getFirestore();
+    const profile = getState().firebase.profile;
+    const authorId = getState().firebase.auth.uid;
+
     firestore
       .collection("targets")
       .add({
         ...target,
-        authorFirstName: "Luis",
-        authorLastName: "Montes",
-        authorId: 12345,
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        authorId: authorId,
         createdAt: new Date()
       })
       .then(() => {
