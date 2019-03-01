@@ -17,7 +17,6 @@ class CreateTarget extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
     this.props.createTarget(this.state);
     this.props.history.push("/");
   };

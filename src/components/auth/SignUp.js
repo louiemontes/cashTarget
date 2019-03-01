@@ -20,7 +20,6 @@ class SignUp extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.signUp(this.state);
-    //console.log(this.state);
   };
 
   render() {
